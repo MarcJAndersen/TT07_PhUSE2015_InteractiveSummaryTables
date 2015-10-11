@@ -71,7 +71,7 @@ WEB server needed to overcome cors limitations.
 
 ## Linux specific
 
-## Populate directory with files from R-package rrdfqbcrnd0, linux
+## Populate directory with files from R-package rrdfqbcrnd0 (https://github.com/MarcJAndersen/rrdfqbcrnd0), linux
 
 The directory sample-rdf contains the nescessary files. This is only applicable if the sample files are changed.
 
@@ -242,12 +242,29 @@ After the service is started change to directory containing the sample RDF files
 The following resouce provided knowledge and/or source code for creating the prototype:
 
 Layout example (http://www.w3schools.com/html/html_layout.asp)
+
 iframe options (http://www.w3schools.com/html/html_iframe.asp)
+
 drag-and-drop (http://www.w3schools.com/html/html5_draganddrop.asp)
+
 drag-and-drop (http://stackoverflow.com/questions/13007582/html5-drag-and-copy)
+
 SPARQL query (http://stackoverflow.com/questions/22769701/how-to-query-dbpedia-in-javascript)
+
 Encoding component of SPARQL query (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)
+
 Copy to clipboard (https://www.lucidchart.com/techblog/2014/12/02/definitive-guide-copying-pasting-javascript/)
+
 jquery (https://jquery.com/download/)
+
+Apache Jena (http://jena.apache.org/)
+
 Virtuoso (http://virtuoso.openlinksw.com)
+
+The RDF Data Cube Vocabulary (http://www.w3.org/TR/vocab-data-cube/)
+
+PhUSE Semantic Technology Project (http://www.phusewiki.org/wiki/index.php?title=Semantic_Technology)
+
+Generating R-RDF Data Cube for Clinical Research & Development, work from a subgroup of PhUSE Semantic Technology Project (https://github.com/MarcJAndersen/rrdfqbcrnd0)
+
 PhUSE Semantic Technology project Analysis Results Model (http://www.phusewiki.org/wiki/index.php?title=Analysis_Results_Model)
