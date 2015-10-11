@@ -1,6 +1,6 @@
 # TT07 _PhUSE2015 Interactive Summary Tables
 
-This GitHub repository contains the source code and data for the Interactive Summary Tables presented in the PhUSE 2015 conference as paper TT07 'Dude, Where's My Graph?' Displaying RDF Data Cube Structure, Content and Summary Tables for Clinical Data
+This GitHub repository contains the source code and data for the Interactive Summary Tables presented in the PhUSE 2015 conference as paper TT07 'Dude, Where's My Graph?' Displaying RDF Data Cube Structure, Content and Summary Tables for Clinical Data (http://www.phuse.eu/2015ConferencePapers.aspx).
 
 The text below is sortof raw - in the sense that it provides the instructions used for setting the interactive summary tables, but could definitively be improved for clarity and completeness.
 
@@ -246,5 +246,7 @@ drag-and-drop (http://www.w3schools.com/html/html5_draganddrop.asp)
 drag-and-drop (http://stackoverflow.com/questions/13007582/html5-drag-and-copy)
 SPARQL query (http://stackoverflow.com/questions/22769701/how-to-query-dbpedia-in-javascript)
 Encoding component of SPARQL query (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)
-Copy to clipboard, (https://www.lucidchart.com/techblog/2014/12/02/definitive-guide-copying-pasting-javascript/)
-
+Copy to clipboard (https://www.lucidchart.com/techblog/2014/12/02/definitive-guide-copying-pasting-javascript/)
+jquery (https://jquery.com/download/)
+Virtuoso (http://virtuoso.openlinksw.com)
+PhUSE Semantic Technology project Analysis Results Model (http://www.phusewiki.org/wiki/index.php?title=Analysis_Results_Model)
