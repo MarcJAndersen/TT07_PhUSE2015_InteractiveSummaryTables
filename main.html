@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!-- Layout example see http://www.w3schools.com/html/html_layout.asp -->
+<!-- iframe options see http://www.w3schools.com/html/html_iframe.asp -->
+<!-- drag-and-drop see http://www.w3schools.com/html/html5_draganddrop.asp -->
+<!-- drag-and-drop see // see http://stackoverflow.com/questions/13007582/html5-drag-and-copy -->
+<!-- SPARQL query see http://stackoverflow.com/questions/22769701/how-to-query-dbpedia-in-javascript -->
+<!-- Encoding component of SPARQL query see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent -->
+<!-- Copy to clipboard, see https://www.lucidchart.com/techblog/2014/12/02/definitive-guide-copying-pasting-javascript/ -->
+
+<html>
+<head>
+<style>
+
+.actionbox {
+    float: left; 
+    width: 100px; 
+    height: 25px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid lightgray;
+}
+
+.droptarget {
+    float: left; 
+    width: 100px; 
+    height: 25px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+
+header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;	 
+}
+nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:900px;
+    width:120px;
+    float:left;
+    padding:5px;	      
+}
+section {
+    width:1200px;
+    height:700px;
+    float:left;
+    padding:10px;	 	 
+}
+footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;	 	 
+}
+
+/* http://stackoverflow.com/questions/5867985/full-screen-iframe-with-a-height-of-100 approach 2 */
+iframe {
+    border: none;
+    top: 0; right: 0;
+    bottom: 0; left: 0;
+    width: 1400px;
+    height: 700px;
+}
+// style='top: 0; right: 0; bottom: 0; left: 0; width: 1500px;height: 800px;
+
+.hidden {
+    width: 1px;
+    height: 1px;
+    display: block;
+    font-size: 1px;
+    z-index: -1;
+     background-color:#eeeeee;
+     color:#eeeeee;
+    overflow: hidden;
+    border: none;
+    padding: 0;
+    resize: none;
+    outline: none;
+    -webkit-user-select: text;
+    user-select: text;
+    /* Because for user-select:none, Safari won't allow input */
+}
+
+</style>
+
+<script src="jquery-2.1.3.min.js"></script>
+<!-- jquery-ui-1.11.3.custom/ -->
+<link rel="stylesheet" href="jquery-ui.css"/>
+<script src="jquery-ui.min.js"></script>
+<link rel="stylesheet" href="jquery-ui.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+
+<script src="sparqlQueryJson.js"></script>
+
+<script src="ActionData.js"></script>
+
+<script>    
+
+var textToCopy = 'No text copied';
+var htmlToCopy = '<div hiddenContent="Here is the text">No text copied</div>';
+
+// Using iframe to load existing contents and generated contents
+// not sure if it is the most clever approach
+// there may be limitations on srcdoc
+// see http://stackoverflow.com/questions/19739001/which-is-the-difference-between-srcdoc-and-src-datatext-html-in-an
+
+function setsrc(ref)
+{
+console.log("Set src: ", ref);
+// document.getElementById("myframe").src= ref;
+document.getElementById("myframe").srcdoc= "<iframe style='width:1200px; height:800px;' src='"+ref+"'></iframe>";
+}
+
+
+
+
+function setsrcdoc(htmlcode)
+{
+console.log("Set srcdoc: ", htmlcode);
+// document.getElementById("myframe").src= NULL;
+document.getElementById("myframe").srcdoc= htmlcode;
+}
+
+
+function allowDrop(ev)
+{
+ev.preventDefault();
+}
+
+function drag(ev)
+{
+ev.dataTransfer.setData("Text",ev.target.id);
+console.log("Dragging: ", ev.target.id);
+}
+
+function drop(ev)
+{
+ev.preventDefault();
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "";
+    }
+var data=ev.dataTransfer.getData("Text");
+console.log("Dropping: ", data);
+}
+
+// When the draggable p element enters the droptarget, change the DIVS's border style
+document.addEventListener("dragenter", function(event) {
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "3px dotted green";
+    }
+});
+
+
+// When the draggable p element leaves the droptarget, reset the DIVS's border style
+document.addEventListener("dragleave", function(event) {
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "";
+    }
+});
+
+
+function ActionDescribe(ev)
+{
+ev.preventDefault();
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "";
+    }
+var data=ev.dataTransfer.getData("Text");
+console.log("Describe : ", data);
+var fctlink= "http://localhost:8890/describe/?url="+encodeURI(data);
+console.log(" --> Open: ", fctlink);
+setsrc(fctlink)
+// alert("Drop on 1: "+ data);
+}
+
+function ActionDimensions(ev)
+{
+ev.preventDefault();
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "";
+    }
+var data=ev.dataTransfer.getData("Text");
+console.log("Dimensions : ", data);
+
+var rqquery= [
+"prefix qb: <http://purl.org/linked-data/cube#> ",
+"prefix rrdfqbcrnd0: <http://www.example.org/rrdfqbcrnd0/> ",
+"prefix skos:  <http://www.w3.org/2004/02/skos/core#> ",
+"select distinct ?p ?vn ?cl ?prefLabel ",
+"where {",
+"?DataStructureDefinition a qb:DataStructureDefinition ;",
+"   qb:component ?component .",
+"?component a qb:ComponentSpecification .",
+"?component qb:dimension ?p .",
+"?p qb:codeList ?c .",
+"?c skos:hasTopConcept ?cl .",
+"?cl skos:prefLabel ?prefLabel .",
+"OPTIONAL { ?c rrdfqbcrnd0:R-columnname ?vn } ",
+"?obs qb:dataSet ?ds .",
+"?ds qb:structure ?DataStructureDefinition .",
+"values ( ?obs ) {",
+"(<"+data+">)",
+"}",
+"}",
+   "order by ?p ?cl ?prefLabel"
+].join("\n")			       
+;
+
+<!-- var rqquery= [ -->
+<!-- "select * ",  -->
+<!--       "where {", -->
+<!--       "?s ?p ?o", -->
+<!-- "} limit 1000",  -->
+<!-- ].join(" ")	 -->
+<!-- ;  -->
+
+var sparqlURI="http://localhost:8890/sparql?default-graph-uri=&query="+encodeURIComponent(rqquery)+"&format=text%2Fhtml&timeout=0&debug=on";
+console.log(" --> Open: ", sparqlURI);
+setsrc(sparqlURI);
+
+<!-- can not get Apache rewriting to work  -->
+<!-- var endpoint="http://localhost:3030/arm/query"; -->
+<!-- var endpoint="http://localhost/sparql"; -->
+<!-- sparqlQueryJson(rqquery, endpoint, -->
+<!-- 		function(jsonString) {alert(JSON.parse(jsonString)); return TRUE;}, true); -->
+
+}
+
+
+
+function ActionCopyClipboard(ev)
+{
+	ev.preventDefault();	
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "";
+    }
+var data=ev.dataTransfer.getData("Text");
+	console.log("Get Data : ", data);
+	
+	window.textToCopy = ev.dataTransfer.getData("text");
+	window.htmlToCopy = ev.dataTransfer.getData("text/html");
+
+
+	var hiddenInput = $("#hidden-input");
+	hiddenInput.val('');
+ 	hiddenInput.focus().select();
+
+}
+
+$(window).load(function(){
+// code from https://www.lucidchart.com/techblog/2014/12/02/definitive-guide-copying-pasting-javascript/
+
+	var isSafari = navigator.appVersion.search('Safari') != -1 && navigator.appVersion.search('Chrome') == -1 && navigator.appVersion.search('CrMo') == -1 && navigator.appVersion.search('CriOS') == -1;
+
+var hiddenInput = $("#hidden-input");
+
+var userInput = "";
+var hiddenInputListener = function(text) {};
+
+var focusHiddenArea = function() {
+    // In order to ensure that the browser will fire clipboard events, we always need to have something selected
+    hiddenInput.val(' ');
+    hiddenInput.focus().select();
+};
+
+hiddenInput.on('input', function(e) {
+    var value = hiddenInput.val();
+    userInput += value;
+    hiddenInputListener(userInput);
+
+    // There is a bug (sometimes) with Safari and the input area can't be updated during
+    // the input event, so we update the input area after the event is done being processed
+    if (isSafari) {
+        hiddenInput.focus();
+        setTimeout(focusHiddenArea, 0);
+    } else {
+        focusHiddenArea();
+    }
+});
+
+
+	// For every broswer except IE, we can easily get and set data on the clipboard
+var standardClipboardEvent = function(clipboardEvent, event) {
+    var clipboardData = event.clipboardData;
+    if (clipboardEvent == 'copy') {
+        clipboardData.setData('text/plain', window.textToCopy);
+        clipboardData.setData('text/html', window.htmlToCopy);
+        $("#dialog").dialog("close");
+    }
+};
+
+// Set clipboard event listeners on the document. 
+    document.addEventListener("copy", function(e) {
+        console.log("copy");
+            standardClipboardEvent("copy", e);
+            e.preventDefault();
+    });
+
+// Keep the hidden text area selected
+// $(document).mouseup(focusHiddenArea);
+
+});
+
+  $(function() {
+    $( "#tabs" ).tabs();
+});
+
+$('#tabs').css('width','1200px');
+</script>    
+</head>
+<body>
+
+<!-- <header> -->
+<!-- <h1>RDF Table browser</h1> -->
+<!-- </header> -->
+
+<nav>
+
+<span  class="droptarget" id="ActionDescribe" ondrop="ActionDescribe(event)" ondragover="allowDrop(event)">Describe</span><br>
+<span  class="droptarget" id="ActionDimensions" ondrop="ActionDimensions(event)" ondragover="allowDrop(event)">Dimensions</span><br>
+<span  class="droptarget" id="ActionData" ondrop="ActionData(event)" ondragover="allowDrop(event)">Data</span><br>
+<span  class="droptarget" id="ActionCopyClipboard" ondrop="ActionCopyClipboard(event)" ondragover="allowDrop(event)">Copy</span><br>
+<span  class="actionbox" id="shownotmade" onclick="setsrc('Not-made-yet.html')">Trial List</span><br>
+<span  class="actionbox" id="showdisp" onclick="setsrc('DC-DISP-sample.html')">Disposition</span><br>
+<span  class="actionbox" id="showdemo" onclick="setsrc('DC-DEMO-sample.html')">Demographics</span><br>
+<span  class="actionbox" id="showae" onclick="setsrc('DC-AE-sample.html')">AEs</span><br>
+  <!-- for copy to clipboard - looks like the class is not picked up by chrome, so using style statement -->
+<input id="hidden-input" class="hidden" value="" type="text" size="1" style="width: 1px; height: 1px; display: block; font-size: 1px; z-index: -1; background-color:#eeeeee; color:#eeeeee; overflow: hidden;border: none; padding: 0; resize: none; outline: none; -webkit-user-select: text; user-select: text;">
+
+
+
+
+</nav>
+
+<section>
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Main</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
+    <li><a href="#tabs-2">Sub part 1</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
+    <li><a href="#tabs-3">Sub part 2</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>
+  </ul>
+  <div id="tabs-1">
+<iframe id="myframe" src="describe-functionality.html">
+  <p>Your browser does not support iframes.</p>
+</iframe>
+  </div>
+  <div id="tabs-2">
+<div id="ShowResult"></div>
+  </div>
+  <div id="tabs-3">
+<div id="ShowResult2"></div>
+  </div>
+</div>
+
+</section>
+
+<footer>
+TT07 PhUSE 2015
+</footer>
+
+
+</body>
+</html>

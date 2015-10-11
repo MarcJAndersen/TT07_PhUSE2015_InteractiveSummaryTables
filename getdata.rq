@@ -1,0 +1,9 @@
+select ?record ?TRT01A ?SEX ?AGE 
+where {
+  ?record <http://www.example.org/datasets/vocab/ADSL_TRT01A> ?TRT01A ;
+  <http://www.example.org/datasets/vocab/ADSL_SEX> ?SEX ;
+  <http://www.example.org/datasets/vocab/ADSL_AGE> ?AGE .
+  values (?TRT01A ?SEX) {
+    ( "Placebo"  "F" )
+  }
+}
