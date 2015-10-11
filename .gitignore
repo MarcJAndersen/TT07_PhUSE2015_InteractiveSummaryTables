@@ -8,3 +8,8 @@ problem.txt
 *.md~
 *.sql~
 rrdf-sample-rdf-load.sql~
+virtuoso_db/virtuoso-temp.db
+*.db
+virtuoso_db/virtuoso.log
+*.trx
+virtuoso_db/virtuoso.pxa
