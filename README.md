@@ -3,6 +3,7 @@
 This GitHub repository contains the source code and data for the Interactive Summary Tables presented in the PhUSE 2015 conference as paper TT07 'Dude, Where's My Graph?' Displaying RDF Data Cube Structure, Content and Summary Tables for Clinical Data (http://www.phuse.eu/2015ConferencePapers.aspx).
 
 The text below is sortof raw - in the sense that it provides the instructions used for setting the interactive summary tables, but could definitively be improved for clarity and completeness.
+Oh, the html and javascript is also in an unfinished form.
 
 Marc Andersen, 11-oct-2015
 
