@@ -5,7 +5,7 @@ This GitHub repository contains the source code and data for the Interactive Sum
 The text below is sortof raw - in the sense that it provides the instructions used for setting the interactive summary tables, but could definitively be improved for clarity and completeness.
 Oh, the html and javascript is also in an unfinished form.
 
-Marc Andersen, 11-oct-2015
+Marc Andersen, 11-oct-2015, updated 28-oct-2015
 
 # Setup
 
@@ -151,9 +151,9 @@ Here is the expected output:
 
 
 
-Then open another terminal window and issue
+To do so, open another terminal window and issue
 
-    cd ~/projects/TT07_PhUSE2015/marc/interface2
+    cd $X
     /usr/local/virtuoso-opensource/bin/isql 1111 dba dba fct_dav_install.sql
 
 More information:
