@@ -237,6 +237,21 @@ Finally, start virtuoso
 
 After the service is started change to directory containing the sample RDF files. In my setup this is h:/projects-s114h/GitHub/TT07_PhUSE2015/marc/interface2/.
 
+#### removing virtuoso service
+
+The service name is the one given in brackets in Services column Name.
+
+virtuoso-t +service create +instance "OpenLink_Virtuoso_XX" +configfile "c:\Program Files\OpenLink Software\VOS7\virtuoso-opensource\database\virtuoso.ini"
+
+virtuoso-t +service delete +instance "OpenLink_Virtuoso_XX"
+The removal of the Virtuoso_OpenLink_Virtuoso_XX service registration was successful
+
+virtuoso-t +service delete +instance "New Instance Name"
+The removal of the Virtuoso_New Instance Name service registration was successful
+
+
+
+
 # Acknowledments and thanks
 
 The following resouce provided knowledge and/or source code for creating the prototype:
