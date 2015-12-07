@@ -13,3 +13,4 @@ virtuoso_db/virtuoso-temp.db
 virtuoso_db/virtuoso.log
 *.trx
 virtuoso_db/virtuoso.pxa
+*.ini~

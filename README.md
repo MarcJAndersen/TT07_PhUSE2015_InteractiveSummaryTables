@@ -59,6 +59,12 @@ Finally, load the example turtle files.
     cd/d h:\projects-s114h\GitHub\TT07_PhUSE2015\marc\interface2
     isql 1111 dba dba rrdf-sample-rdf-load.sql
 
+### Assigning access rights
+
+For update
+	GRANT EXECUTE  ON DB.DBA.SPARQL_INSERT_DICT_CONTENT TO "SPARQL";
+	GRANT EXECUTE ON DB.DBA.L_O_LOOK TO "SPARQL"
+
 
 ### Start web server
 
